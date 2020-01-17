@@ -3,11 +3,9 @@ const router = express.Router();
 const Psychres = require('../models/Psychres')
 
 // get a list of psychological resources form the database
-// get a list of ninjas from the db
+
 router.get('/Psychres', function(req, res, next){
-    // Ninja.find({}).then(function(ninjas){
-    //  res.send(ninjas);
-    // });
+    
     Psychres.aggregate().near({ 
      near: 
      {
