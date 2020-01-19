@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const port = process.env.port || 4000
 
 
 // set up express app
@@ -10,6 +11,8 @@ const app = express();
 mongoose.connect('mongodb://localhost/psychresgo',{useNewUrlParser: true }, { useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 
+
+app.use(express.static("public"));
 app.use(bodyParser.json())
 
 
