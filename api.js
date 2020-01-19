@@ -4,21 +4,22 @@ const Psychres = require('../models/Psychres')
 
 // get a list of psychological resources form the database
 
-router.get('/Psychres', function(req, res, next){
-    
-    Psychres.aggregate().near({ 
-     near: 
-     {
-      'type': 'Point',
-       'coordinates': [parseFloat(req.query.lng), parseFloat(req.query.lat)] }, 
-       maxDistance: 250, 
-       spherical: true, 
-       distanceField: "dis" 
-      }
-      ).then(function(psychres){
-      res.send(psychres);
-       });
-   });
+router.get("/psychres", function(req, res, next) {
+    Psychres.aggregate()
+      .near({
+        near: {
+          type: "point",
+          coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
+        },
+        distanceField: "dist.calculated",
+        maxDistance: 100000,
+        spherical: true
+      })
+      .then(function(psychres) {
+        res.send(psychres);
+      })
+      .catch(next);
+  });
 
 //add a new psychological reosurce to the database
 router.post('/Psychres',function(req,res,next){
