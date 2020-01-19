@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <title>UC Davis Mental Health Support</title>
+</head>
+
+<body>
+  <h1 class="title">UC Davis Mental Health Support</h1>
+  <div id="homepage">
+    <h1>Find a Psychological Resource Near You</h1>
+    <div id="psychress"></div>
+  </div>
+
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+
+<script type="text/babel">
+class Psychress extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      psychress: []
+      
+    };
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let lng = this.refs.lng.value;
+    let lat = this.refs.lat.value;
+
+    fetch(`http://localhost:4000/api/Psychres?lng=${lng}&lat=${lat}`)
+      .then(data => {
+        return data.json();
+      })
+      .then(json => {
+        this.setState({
+          psychres: json
+        });
+      });
+  }
+
+  render() {
+    let psychress = this.state.psychress;
+
+    psychress = psychress.map((psychres, index) => {
+      return (
+        <li key={index}>
+          <span className="name">{psychres.obj.name}></span>
+          <span className="hours">{psychres.obj.hours}</span>
+          <span className="dist">{Math.floor(psychres.dis)} m</span>
+        </li>
+      );
+    });
+
+    return (
+      <div id="psychres-container">
+        <form id="search" onSubmit={this.handleSubmit.bind(this)}>
+          <label>Enter your latitude</label>
+          <input type="text" ref="lat" placeholder="latitude" required />
+          <label>Enter your longitude</label>
+          <input type="text" ref="lng" placeholder="longitude" required />
+          <input type="submit" value="Find Psychological Resource" />
+        </form>
+        <ul>{psychress}</ul>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Psychress />, document.getElementById("psychress"));
+</script>
+
+
+
+</body>
+</html>
