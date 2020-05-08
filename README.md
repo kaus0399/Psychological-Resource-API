@@ -1,6 +1,4 @@
 # Hackathon-2020
-Project for 2020 Hackathon
-This is a basic Hackathon project that uses node.js, express and mongoDB to create a collection of Psychological resources
-on the UC Davis campus. 
-
-There are issues with the GET route as geoNear is no longer supported on the latest version of mongoose. Any Help is appreciated. 
+Project for 2020 UC Davis Hackathon
+A simple project that uses node.js, express and mongoDB to create a collection of Psychological resources
+on the UC Davis campus. User can input current cordinates and the application will direct you to the closest Psychological Resource. 
